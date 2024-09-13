@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import ExpenseList from "./ExpenseList";
+import ExpenseForm from "./ExpenseForm";
+import TotalAmount from "./TotalAmount";
 
 function App() {
+  const [expenses, setExpenses] = useState([]);
+
+  // Função para adicionar uma nova despesa
+  const addExpense = (expense) => {
+    setExpenses([...expenses, expense]);
+  };
+
+  // Função para remover uma despesa
+  const removeExpense = (index) => {
+    const newExpenses = expenses.filter((_, i) => i !== index);
+    setExpenses(newExpenses);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Controle de Gastos</h1>
+      <ExpenseForm addExpense={addExpense} />
+      <ExpenseList expenses={expenses} removeExpense={removeExpense} />
+      <TotalAmount expenses={expenses} />
     </div>
   );
 }
